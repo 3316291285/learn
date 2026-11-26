@@ -106,23 +106,23 @@
           "name": "多智能体编排",
           "slug": "multi-agent",
           "status": "in_progress",
-          "confidence": 0.3,
+          "confidence": 0.4,
           "practice_count": 0,
           "explain_count": 1,
           "last_explained": "2026-11-25",
           "last_practiced": null,
-          "details": ["主 agent 与 subagent", "pipeline / parallel 编排模式", "已讲（经 mcp 入口 C 展开）：多智能体=用组织分工解决上下文装不下与注意力稀释；subagent=被封装成工具的完整 loop（独立 messages，结果只回传摘要）；编排拓扑 pipeline/parallel/orchestrator（Dify 静态图 vs 动态分派主线呼应）；上下文经济（主上下文 O(1) 增摘要，代价 handoff 损耗）；拆/不拆判断（独立可并行/工具域过大/需隔离→拆；强串行/上下文小→不拆）", "问答反馈（2026-11-26）：Q1 错——把'主上下文省'答成'总 token 省'，已纠偏（判别式：主 agent 上下文✅省，系统总账单❌通常涨——每个子 agent 自带 system+tools 简报，固定开销×N；多智能体买的是专注/隔离/并行墙钟时间不是 token 折扣）；Q2 对（主→子→主 ≈ 模型→tool→模型）；Q3 超预期（模块解耦→并行拆理解；理解→重构强依赖→不拆；补：综合建议适合主 agent 亲自做）。0.25→0.3", "入口A 已讲：handoff 报告 schema（status 显式化/大产物落盘留引用/openQuestions/统计）、信息带宽权衡（瘦→幻觉补全，胖→隔离失效）、黑板模式 vs 纯消息传递（函数调用 vs 全局变量；props/emit vs 直改 store）；小检 1/2 待答"]
+          "details": ["主 agent 与 subagent", "pipeline / parallel 编排模式", "已讲（经 mcp 入口 C 展开）：多智能体=用组织分工解决上下文装不下与注意力稀释；subagent=被封装成工具的完整 loop（独立 messages，结果只回传摘要）；编排拓扑 pipeline/parallel/orchestrator（Dify 静态图 vs 动态分派主线呼应）；上下文经济（主上下文 O(1) 增摘要，代价 handoff 损耗）；拆/不拆判断（独立可并行/工具域过大/需隔离→拆；强串行/上下文小→不拆）", "问答反馈（2026-11-26）：Q1 错——把'主上下文省'答成'总 token 省'，已纠偏（判别式：主 agent 上下文✅省，系统总账单❌通常涨——每个子 agent 自带 system+tools 简报，固定开销×N；多智能体买的是专注/隔离/并行墙钟时间不是 token 折扣）；Q2 对（主→子→主 ≈ 模型→tool→模型）；Q3 超预期（模块解耦→并行拆理解；理解→重构强依赖→不拆；补：综合建议适合主 agent 亲自做）。0.25→0.3", "入口A 已讲：handoff 报告 schema（status 显式化/大产物落盘留引用/openQuestions/统计）、信息带宽权衡（瘦→幻觉补全，胖→隔离失效）、黑板模式 vs 纯消息传递（函数调用 vs 全局变量；props/emit vs 直改 store）", "入口A 小检批改（2026-11-26）：检1 三缺陷全对+主动追问 stats 副作用（成本不可见/优化无基线/异常检测缺失/容量规划不可能）；检2 部分对——归属错乱与细节丢失抓到，但'严格按 handoff 规范'未解体量问题，漏黑板方案（补：artifacts 落盘引用=朴素黑板）；学习者综合命题'handoff/JSON-RPC/tool schema 三协议关系'——共同点抽象对（跨角色结构化通信约束）、tool schema 方向修正（模型与工具无直接通信，是 host↔模型边）、层级包容论修正为'同思想×不同边×路径上组合'（黑板反例证伪严格包容）。0.3→0.35", "入口B 已讲：失败来源与 status/openQuestions 显式化、重试决策归模型（错误即观察；盲重试=循环刹车该拦的情形；瞬时错误 host 自动重试 vs 语义失败归模型）、partial 合并（Promise.allSettled 同构+窄范围补派）、超时降级阶梯（软刹车延续+优雅中断复用）；检3/检4 已答（2026-11-26）：检3 全对（allSettled 语义+主 agent 决策闭环+取消即浪费归因准确）；检4 对（429 定时等待重试+汇总上报用户=错误即观察——补锐：瞬时错误 host 层 backoff 需上限，分支可加换工具/缩范围）。入口B 关闭，0.35→0.4；入口C=agent-evaluation 正式讲"]
         },
         {
           "name": "Agent 评估与调试",
           "slug": "agent-evaluation",
-          "status": "unexplored",
-          "confidence": 0,
+          "status": "in_progress",
+          "confidence": 0.25,
           "practice_count": 0,
-          "explain_count": 0,
-          "last_explained": null,
+          "explain_count": 1,
+          "last_explained": "2026-11-26",
           "last_practiced": null,
-          "details": ["会话日志与轨迹回放", "回归测试与评估集"]
+          "details": ["会话日志与轨迹回放", "回归测试与评估集", "已讲（经 multi-agent 入口 C 展开，agent-core 收官）：轨迹 trace 是评估第一公民（非确定性系统只看结果不够）；评估三层（单步断言/轨迹评估/结果评估 LLM-judge）；评估集与回归（prompt 是代码，改 prompt 要跑测试）；调试方法论（复现→定位→假设→改→回归）；指标（成功率/步数/token 成本/工具错误率/刹车触发率）——数据源已由 stats/审计日志铺好", "Q1-Q3 自检待答"]
         }
       ]
     },
